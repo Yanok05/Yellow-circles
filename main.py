@@ -1,3 +1,5 @@
+import random
+
 from PyQt5 import uic
 import sys
 from PyQt5.QtGui import QPainter
@@ -13,14 +15,21 @@ class CirclesDrawer(QWidget):
         self.pushButton.clicked.connect(self.lets_draw)
         self.drawer = QPainter
 
-    def lets_draw(self):
-        numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-        for i in range(choice(numbers)):
-            self.drawer.drawEllipse()
+    def paintEvent(self, e):
 
-    def resizeEvent(self, event):
-        width = self.size().width()
-        height = self.size().height()
+        qp = QPainter()
+        qp.begin(self)
+        self.drawPoints(qp)
+        qp.end()
+
+    def drawPoints(self, qp):
+        qp.setPen(Qt.red)
+        size = self.size()
+
+        for i in range(1000):
+            x = random.randint(1, size.width() - 1)
+            y = random.randint(1, size.height() - 1)
+            qp.drawPoint(x, y)
 
 
 
